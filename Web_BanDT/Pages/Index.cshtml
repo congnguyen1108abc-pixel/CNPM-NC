@@ -1,0 +1,3956 @@
+@page
+@model Web_BanDT.Pages.IndexModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AURA PHONE - Cửa hàng điện thoại chính hãng đa thương hiệu" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>AURA PHONE | Smartphone Store</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #f6f6f7;
+            --surface: #ffffff;
+            --surface-soft: #f0f0f2;
+            --surface-dark: #0c0c0d;
+            --surface-dark-2: #171719;
+            --ink: #0a0a0b;
+            --ink-2: #323236;
+            --muted: #73757b;
+            --muted-2: #9d9fa5;
+            --line: rgba(10, 10, 11, .085);
+            --line-dark: rgba(255, 255, 255, .11);
+            --glass: rgba(255, 255, 255, .68);
+            --glass-strong: rgba(255, 255, 255, .84);
+            --shadow-sm: 0 10px 32px rgba(0, 0, 0, .055);
+            --shadow-md: 0 22px 64px rgba(0, 0, 0, .10);
+            --shadow-lg: 0 36px 110px rgba(0, 0, 0, .15);
+            --radius-sm: 16px;
+            --radius-md: 24px;
+            --radius-lg: 32px;
+            --radius-xl: 42px;
+            --container: 1360px;
+            --ease: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 120px;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: "Inter", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 0 0, rgba(0,0,0,.035), transparent 24%),
+                radial-gradient(circle at 100% 28%, rgba(0,0,0,.025), transparent 20%),
+                linear-gradient(180deg, #fff 0%, var(--bg) 62%, #f0f0f1 100%);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body.menu-open,
+        body.search-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img,
+        video {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            background: none;
+            cursor: pointer;
+        }
+
+        ::selection {
+            color: #fff;
+            background: #111;
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 84px 0;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 28px;
+            margin-bottom: 34px;
+        }
+
+        .section-copy {
+            max-width: 740px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #686a70;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 24px;
+            height: 2px;
+            border-radius: 999px;
+            background: #111;
+        }
+
+        .section-title {
+            margin-top: 12px;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(34px, 4vw, 58px);
+            line-height: 1;
+            font-weight: 750;
+            letter-spacing: -.055em;
+        }
+
+        .section-description {
+            max-width: 610px;
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .text-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            color: #151516;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .text-link svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            transition: transform .3s var(--ease);
+        }
+
+        .text-link:hover svg {
+            transform: translateX(4px);
+        }
+
+        .glass {
+            border: 1px solid rgba(255,255,255,.78);
+            background: rgba(255,255,255,.60);
+            backdrop-filter: blur(24px) saturate(130%);
+            -webkit-backdrop-filter: blur(24px) saturate(130%);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.94),
+                0 18px 55px rgba(0,0,0,.075);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity .75s var(--ease),
+                transform .75s var(--ease);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .delay-1 { transition-delay: .08s; }
+        .delay-2 { transition-delay: .16s; }
+        .delay-3 { transition-delay: .24s; }
+
+        /* =========================================================
+           TOP STRIP
+        ========================================================= */
+        .commerce-strip {
+            position: relative;
+            z-index: 1200;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            color: #d9d9dc;
+            background: #0a0a0b;
+            font-size: 10px;
+        }
+
+        .commerce-strip-inner {
+            width: min(var(--container), calc(100% - 48px));
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .strip-message,
+        .strip-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .strip-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(255,255,255,.08);
+        }
+
+        .strip-links a {
+            color: #aaaab0;
+            transition: color .2s ease;
+        }
+
+        .strip-links a:hover {
+            color: #fff;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            padding: 14px 0 0;
+            pointer-events: none;
+        }
+
+        .header-shell {
+            width: min(var(--container), calc(100% - 40px));
+            margin: 0 auto;
+            pointer-events: auto;
+        }
+
+        .header-main {
+            min-height: 72px;
+            display: grid;
+            grid-template-columns: auto minmax(280px, 1fr) auto;
+            align-items: center;
+            gap: 26px;
+            padding: 0 18px;
+            border-radius: 24px;
+            transition: background .3s ease, box-shadow .3s ease, transform .3s var(--ease);
+        }
+
+        .site-header.scrolled .header-main {
+            background: rgba(255,255,255,.82);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.96),
+                0 14px 48px rgba(0,0,0,.10);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 142px;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: #fff;
+            background: linear-gradient(145deg, #2e2e31, #050505 72%);
+            box-shadow:
+                inset 0 1px 1px rgba(255,255,255,.25),
+                0 10px 24px rgba(0,0,0,.18);
+            font-family: "Manrope", sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .brand-word {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .brand-name {
+            font-family: "Manrope", sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: -.04em;
+        }
+
+        .brand-subtitle {
+            margin-top: 4px;
+            color: #9a9ca1;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .14em;
+        }
+
+        .desktop-search {
+            position: relative;
+            max-width: 650px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .desktop-search svg {
+            position: absolute;
+            left: 17px;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            transform: translateY(-50%);
+            fill: none;
+            stroke: #62646a;
+            stroke-width: 1.7;
+        }
+
+        .desktop-search input {
+            width: 100%;
+            height: 46px;
+            padding: 0 92px 0 47px;
+            border: 1px solid rgba(0,0,0,.075);
+            border-radius: 999px;
+            outline: none;
+            color: #111;
+            background: rgba(255,255,255,.66);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+            font-size: 12px;
+            transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+        }
+
+        .desktop-search input:focus {
+            border-color: rgba(0,0,0,.18);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0,0,0,.04);
+        }
+
+        .search-shortcut {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 6px 9px;
+            border: 1px solid rgba(0,0,0,.075);
+            border-radius: 8px;
+            color: #8d8f94;
+            background: #f4f4f5;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-button {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: #19191b;
+            transition: background .25s ease, transform .25s var(--ease);
+        }
+
+        .action-button:hover {
+            background: rgba(0,0,0,.055);
+            transform: translateY(-1px);
+        }
+
+        .action-button svg {
+            width: 19px;
+            height: 19px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.65;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 2px;
+            right: 1px;
+            min-width: 17px;
+            height: 17px;
+            display: grid;
+            place-items: center;
+            padding: 0 4px;
+            border: 2px solid #fff;
+            border-radius: 999px;
+            color: #fff;
+            background: #0a0a0b;
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .cart-count.bump {
+            animation: cartBump .42s var(--ease);
+        }
+
+        .menu-button {
+            display: none;
+        }
+
+        .category-nav {
+            position: relative;
+            min-height: 49px;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 2px;
+            margin-top: 8px;
+            padding: 0 12px;
+            border-radius: 18px;
+            overflow: visible;
+        }
+
+        .nav-entry {
+            position: static;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .nav-trigger {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0 13px;
+            color: #66686e;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: 650;
+            transition: color .25s ease, background .25s ease;
+        }
+
+        .nav-trigger::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 5px;
+            width: 15px;
+            height: 2px;
+            border-radius: 999px;
+            background: #111;
+            transform: translateX(-50%) scaleX(0);
+            transition: transform .3s var(--ease);
+        }
+
+        .nav-trigger:hover,
+        .nav-trigger.active,
+        .nav-entry:focus-within > .nav-trigger,
+        .nav-entry:hover > .nav-trigger {
+            color: #0d0d0e;
+        }
+
+        .nav-trigger:hover::after,
+        .nav-trigger.active::after,
+        .nav-entry:focus-within > .nav-trigger::after,
+        .nav-entry:hover > .nav-trigger::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-chevron {
+            width: 12px;
+            height: 12px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform .28s var(--ease);
+        }
+
+        .nav-entry:hover .nav-chevron,
+        .nav-entry:focus-within .nav-chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Full-width commerce mega menu. Padding-top bridges the hover gap. */
+        .mega-menu {
+            position: absolute;
+            z-index: 1200;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding-top: 9px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px) scale(.992);
+            transform-origin: top center;
+            transition: opacity .22s ease, visibility .22s ease, transform .28s var(--ease);
+        }
+
+        .nav-entry:hover .mega-menu,
+        .nav-entry:focus-within .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .mega-menu-panel {
+            display: grid;
+            grid-template-columns: 1.2fr .85fr .95fr .9fr 1.25fr;
+            gap: 0;
+            width: 100%;
+            min-height: 286px;
+            overflow: hidden;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,.82);
+            border-radius: 24px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,.92), rgba(244,244,246,.78));
+            backdrop-filter: blur(28px) saturate(135%);
+            -webkit-backdrop-filter: blur(28px) saturate(135%);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.96),
+                0 28px 80px rgba(0,0,0,.14);
+        }
+
+        .mega-menu-compact {
+            grid-template-columns: 1.25fr 1fr 1fr 1.35fr;
+        }
+
+        .mega-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 3px;
+            min-width: 0;
+            padding: 11px 20px;
+            border-right: 1px solid rgba(0,0,0,.065);
+        }
+
+        .mega-menu-panel > .mega-column:nth-last-of-type(1) {
+            border-right: 0;
+        }
+
+        .mega-column-primary {
+            padding-left: 12px;
+        }
+
+        .mega-kicker {
+            display: block;
+            margin-bottom: 9px;
+            color: #a0a2a7;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .mega-column > a {
+            width: 100%;
+            padding: 7px 0;
+            color: #55575c;
+            font-size: 10px;
+            font-weight: 550;
+            line-height: 1.35;
+            transition: color .2s ease, transform .22s var(--ease);
+        }
+
+        .mega-column > a::after,
+        .mega-feature::after {
+            display: none !important;
+        }
+
+        .mega-column > a:hover,
+        .mega-column > a:focus-visible {
+            color: #050505;
+            transform: translateX(3px);
+        }
+
+        .mega-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .mega-brand strong {
+            color: #111214;
+            font-family: "Manrope", sans-serif;
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: -.025em;
+        }
+
+        .mega-brand span {
+            color: #97999e;
+            font-size: 8px;
+            font-weight: 500;
+        }
+
+        .mega-feature {
+            position: relative;
+            min-height: 248px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-self: center;
+            overflow: hidden;
+            padding: 23px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 75% 20%, rgba(0,0,0,.12), transparent 35%),
+                linear-gradient(145deg, #f5f5f6, #e7e7ea);
+            color: #111;
+            transition: transform .3s var(--ease), box-shadow .3s ease;
+        }
+
+        .mega-feature::before {
+            content: "";
+            position: absolute;
+            width: 145px;
+            height: 145px;
+            top: -52px;
+            right: -42px;
+            border: 1px solid rgba(0,0,0,.08);
+            border-radius: 50%;
+            box-shadow: 0 0 0 26px rgba(0,0,0,.025), 0 0 0 52px rgba(0,0,0,.016);
+        }
+
+        .mega-feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0,0,0,.09);
+        }
+
+        .mega-feature-dark {
+            border-color: rgba(255,255,255,.10);
+            background:
+                radial-gradient(circle at 78% 18%, rgba(255,255,255,.16), transparent 34%),
+                linear-gradient(145deg, #111113, #29292d);
+            color: #fff;
+        }
+
+        .mega-feature-dark::before {
+            border-color: rgba(255,255,255,.08);
+            box-shadow: 0 0 0 26px rgba(255,255,255,.025), 0 0 0 52px rgba(255,255,255,.015);
+        }
+
+        .mega-feature-label {
+            position: relative;
+            z-index: 1;
+            margin-bottom: auto;
+            color: #8e9095;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .mega-feature-dark .mega-feature-label {
+            color: #a6a7ac;
+        }
+
+        .mega-feature strong {
+            position: relative;
+            z-index: 1;
+            margin-top: 50px;
+            font-family: "Manrope", sans-serif;
+            font-size: 21px;
+            font-weight: 750;
+            letter-spacing: -.045em;
+        }
+
+        .mega-feature > span:not(.mega-feature-label):not(.mega-feature-link) {
+            position: relative;
+            z-index: 1;
+            margin-top: 7px;
+            color: #73757a;
+            font-size: 9px;
+            line-height: 1.55;
+        }
+
+        .mega-feature-dark > span:not(.mega-feature-label):not(.mega-feature-link) {
+            color: #afb0b5;
+        }
+
+        .mega-feature-link {
+            position: relative;
+            z-index: 1;
+            margin-top: 16px;
+            font-size: 9px;
+            font-weight: 750;
+        }
+
+        /* =========================================================
+           MOBILE MENU
+        ========================================================= */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 1500;
+            padding: 110px 18px 30px;
+            background: rgba(236,236,238,.78);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .3s ease, visibility .3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .mobile-menu-card {
+            width: min(520px, 100%);
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 28px;
+            transform: translateY(-16px);
+            transition: transform .4s var(--ease);
+        }
+
+        .mobile-menu.active .mobile-menu-card {
+            transform: none;
+        }
+
+        .mobile-menu a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 5px;
+            border-bottom: 1px solid var(--line);
+            font-family: "Manrope", sans-serif;
+            font-size: 18px;
+            font-weight: 650;
+            letter-spacing: -.035em;
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: 0;
+        }
+
+        /* =========================================================
+           HERO COMMERCE
+        ========================================================= */
+        .hero-commerce {
+            padding: 34px 0 26px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.75fr) minmax(300px, .75fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .hero-slider {
+            position: relative;
+            min-height: 575px;
+            overflow: hidden;
+            border-radius: 36px;
+            background: #111;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            align-items: center;
+            padding: 58px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.018);
+            transition:
+                opacity .75s ease,
+                visibility .75s ease,
+                transform 1s var(--ease);
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .hero-media {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 78% 32%, rgba(255,255,255,.22), transparent 30%),
+                linear-gradient(135deg, #0b0b0c, #2a2a2e);
+        }
+
+        .hero-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.42) 42%, rgba(0,0,0,.06) 72%),
+                linear-gradient(0deg, rgba(0,0,0,.20), transparent 45%);
+            pointer-events: none;
+        }
+
+        .hero-media img,
+        .hero-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-media img {
+            transition: transform 7s linear;
+        }
+
+        .hero-slide.active .hero-media img {
+            transform: scale(1.045);
+        }
+
+        .hero-slide[data-fallback="light"] .hero-media {
+            background:
+                radial-gradient(circle at 75% 35%, rgba(0,0,0,.10), transparent 30%),
+                linear-gradient(135deg, #f8f8f9, #d9d9dd);
+        }
+
+        .hero-slide[data-fallback="light"] .hero-media::after {
+            background:
+                linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.72) 45%, rgba(255,255,255,.10) 75%);
+        }
+
+        .hero-fallback-phone {
+            position: absolute;
+            z-index: 1;
+            right: 7%;
+            bottom: -4%;
+            width: min(42%, 420px);
+            max-height: 92%;
+            object-fit: contain;
+            filter: drop-shadow(0 38px 32px rgba(0,0,0,.20));
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 4;
+            max-width: 560px;
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 11px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 999px;
+            color: #dfdfe2;
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        .hero-slide[data-fallback="light"] .hero-kicker {
+            color: #494a4f;
+            border-color: rgba(0,0,0,.08);
+            background: rgba(255,255,255,.60);
+        }
+
+        .hero-kicker-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .hero-title {
+            margin-top: 22px;
+            max-width: 620px;
+            color: #fff;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(48px, 5.8vw, 82px);
+            line-height: .92;
+            font-weight: 750;
+            letter-spacing: -.075em;
+        }
+
+        .hero-slide[data-fallback="light"] .hero-title {
+            color: #0a0a0b;
+        }
+
+        .hero-description {
+            max-width: 490px;
+            margin-top: 22px;
+            color: #c4c4c8;
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .hero-slide[data-fallback="light"] .hero-description {
+            color: #66686d;
+        }
+
+        .hero-price {
+            margin-top: 18px;
+            color: #fff;
+            font-family: "Manrope", sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -.035em;
+        }
+
+        .hero-slide[data-fallback="light"] .hero-price {
+            color: #111;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 0 20px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            transition:
+                transform .3s var(--ease),
+                box-shadow .3s ease,
+                background .3s ease,
+                color .3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-light {
+            color: #111;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(0,0,0,.18);
+        }
+
+        .btn-dark {
+            color: #fff;
+            background: #0b0b0c;
+            box-shadow: 0 12px 28px rgba(0,0,0,.18);
+        }
+
+        .btn-glass {
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.18);
+            background: rgba(255,255,255,.10);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .hero-slide[data-fallback="light"] .btn-glass {
+            color: #111;
+            border-color: rgba(0,0,0,.10);
+            background: rgba(255,255,255,.62);
+        }
+
+        .hero-controller {
+            position: absolute;
+            z-index: 10;
+            left: 28px;
+            right: 28px;
+            bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .hero-dots {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 999px;
+            background: rgba(0,0,0,.22);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .hero-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.38);
+            transition: width .35s var(--ease), background .3s ease;
+        }
+
+        .hero-dot.active {
+            width: 25px;
+            border-radius: 999px;
+            background: #fff;
+        }
+
+        .hero-arrows {
+            display: flex;
+            gap: 7px;
+        }
+
+        .hero-arrow {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 50%;
+            color: #fff;
+            background: rgba(0,0,0,.24);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: transform .25s var(--ease), background .25s ease;
+        }
+
+        .hero-arrow:hover {
+            transform: scale(1.06);
+            background: rgba(0,0,0,.42);
+        }
+
+        .hero-arrow svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .hero-side {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .side-promo {
+            position: relative;
+            min-height: 278px;
+            overflow: hidden;
+            padding: 30px;
+            border-radius: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .side-promo.dark {
+            color: #fff;
+            background:
+                radial-gradient(circle at 85% 18%, rgba(255,255,255,.15), transparent 28%),
+                linear-gradient(145deg, #0b0b0c, #262629);
+        }
+
+        .side-promo.light {
+            border: 1px solid rgba(0,0,0,.07);
+            background:
+                radial-gradient(circle at 90% 15%, rgba(0,0,0,.08), transparent 26%),
+                linear-gradient(145deg, rgba(255,255,255,.96), rgba(232,232,234,.90));
+        }
+
+        .promo-label {
+            color: #a5a6ab;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        .side-promo.dark .promo-label {
+            color: #bdbdc2;
+        }
+
+        .side-promo h2 {
+            max-width: 270px;
+            margin-top: 12px;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(27px, 2.6vw, 40px);
+            line-height: 1;
+            letter-spacing: -.055em;
+        }
+
+        .side-promo p {
+            max-width: 265px;
+            margin-top: 12px;
+            color: #77797f;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .side-promo.dark p {
+            color: #aaaab0;
+        }
+
+        .side-promo .text-link {
+            margin-top: 20px;
+        }
+
+        .side-promo.dark .text-link {
+            color: #fff;
+        }
+
+        .promo-orb {
+            position: absolute;
+            right: -42px;
+            bottom: -62px;
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.15);
+            box-shadow:
+                inset 0 0 50px rgba(255,255,255,.08),
+                0 0 0 28px rgba(255,255,255,.025),
+                0 0 0 58px rgba(255,255,255,.018);
+        }
+
+        .trade-device {
+            position: absolute;
+            right: 20px;
+            bottom: -35px;
+            width: 132px;
+            transform: rotate(11deg);
+            filter: drop-shadow(0 22px 22px rgba(0,0,0,.18));
+        }
+
+        /* =========================================================
+           TRUST BAR
+        ========================================================= */
+        .trust-bar {
+            padding: 16px 0 0;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid rgba(0,0,0,.065);
+            border-radius: 24px;
+            background: rgba(255,255,255,.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.94);
+        }
+
+        .trust-item {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-left: 1px solid var(--line);
+        }
+
+        .trust-item:first-child {
+            border-left: 0;
+        }
+
+        .trust-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 13px;
+            color: #111;
+            background: #f0f0f1;
+        }
+
+        .trust-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .trust-item strong {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .trust-item span {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.4;
+        }
+
+        /* =========================================================
+           BRAND RAIL
+        ========================================================= */
+        .brand-section {
+            padding: 72px 0 28px;
+        }
+
+        .brand-rail {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+        }
+
+        .brand-chip {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 22px;
+            color: #7a7c81;
+            background: rgba(255,255,255,.78);
+            font-family: "Manrope", sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            transition:
+                color .3s ease,
+                transform .35s var(--ease),
+                box-shadow .35s ease,
+                border-color .3s ease;
+        }
+
+        .brand-chip:hover {
+            color: #0d0d0e;
+            border-color: rgba(0,0,0,.13);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* =========================================================
+           CATEGORY QUICK SHOP
+        ========================================================= */
+        .quick-shop {
+            padding: 56px 0 86px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px;
+        }
+
+        .quick-card {
+            min-height: 174px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 26px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,.96), rgba(238,238,240,.88));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.96);
+            transition: transform .4s var(--ease), box-shadow .4s ease;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quick-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 15px;
+            background: rgba(255,255,255,.70);
+        }
+
+        .quick-icon svg {
+            width: 21px;
+            height: 21px;
+            fill: none;
+            stroke: #111;
+            stroke-width: 1.55;
+        }
+
+        .quick-card h3 {
+            margin-top: 18px;
+            font-family: "Manrope", sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -.035em;
+        }
+
+        .quick-card p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           PRODUCT SYSTEM
+        ========================================================= */
+        .product-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .filter-chips {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            min-height: 38px;
+            padding: 0 15px;
+            border: 1px solid rgba(0,0,0,.075);
+            border-radius: 999px;
+            color: #686a70;
+            background: rgba(255,255,255,.72);
+            font-size: 10px;
+            font-weight: 700;
+            transition: all .25s ease;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            color: #fff;
+            border-color: #111;
+            background: #111;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 28px;
+            background: rgba(255,255,255,.92);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.98),
+                0 12px 36px rgba(0,0,0,.04);
+            transition:
+                transform .45s var(--ease),
+                box-shadow .45s ease,
+                border-color .35s ease;
+        }
+
+        .product-card.filtered-out {
+            display: none;
+        }
+
+        .product-card:hover {
+            border-color: rgba(0,0,0,.13);
+            transform: translateY(-7px);
+            box-shadow: 0 28px 70px rgba(0,0,0,.11);
+        }
+
+        .product-visual {
+            position: relative;
+            height: 320px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(205,205,209,.62), rgba(244,244,245,.90) 47%, #fff 80%);
+        }
+
+        .product-visual::after {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -80%;
+            width: 45%;
+            height: 140%;
+            transform: rotate(18deg);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.72), transparent);
+            transition: left .85s var(--ease);
+            pointer-events: none;
+        }
+
+        .product-card:hover .product-visual::after {
+            left: 135%;
+        }
+
+        .product-visual img {
+            position: relative;
+            z-index: 2;
+            width: 76%;
+            height: 80%;
+            object-fit: contain;
+            filter: drop-shadow(0 22px 24px rgba(0,0,0,.11));
+            transition: transform .55s var(--ease), filter .4s ease;
+        }
+
+        .product-card:hover .product-visual img {
+            transform: scale(1.06) translateY(-5px);
+            filter: drop-shadow(0 28px 30px rgba(0,0,0,.16));
+        }
+
+        .product-badge {
+            position: absolute;
+            z-index: 5;
+            top: 14px;
+            left: 14px;
+            padding: 7px 10px;
+            border: 1px solid rgba(255,255,255,.88);
+            border-radius: 999px;
+            color: #161617;
+            background: rgba(255,255,255,.70);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: .10em;
+        }
+
+        .favorite-button {
+            position: absolute;
+            z-index: 6;
+            top: 13px;
+            right: 13px;
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.88);
+            border-radius: 50%;
+            color: #686a70;
+            background: rgba(255,255,255,.68);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            transition: all .25s ease;
+        }
+
+        .favorite-button:hover,
+        .favorite-button.active {
+            color: #fff;
+            background: #111;
+        }
+
+        .favorite-button svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+        }
+
+        .favorite-button.active svg {
+            fill: rgba(255,255,255,.16);
+        }
+
+        .product-info {
+            padding: 21px;
+        }
+
+        .product-brand {
+            color: #a0a2a7;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            margin-top: 7px;
+            font-family: "Manrope", sans-serif;
+            font-size: 17px;
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -.035em;
+        }
+
+        .product-variant {
+            margin-top: 6px;
+            min-height: 30px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 11px;
+            color: #77797e;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #28282b;
+        }
+
+        .rating svg {
+            width: 12px;
+            height: 12px;
+            fill: #111;
+            stroke: #111;
+            stroke-width: 1.2;
+        }
+
+        .meta-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #c1c2c6;
+        }
+
+        .installment {
+            padding: 4px 7px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 999px;
+            background: #f4f4f5;
+        }
+
+        .product-price-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .price-stack {
+            min-width: 0;
+        }
+
+        .price-current {
+            display: block;
+            color: #0a0a0b;
+            font-family: "Manrope", sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -.035em;
+        }
+
+        .price-old {
+            display: inline-block;
+            margin-top: 4px;
+            color: #aaacb1;
+            font-size: 9px;
+            text-decoration: line-through;
+        }
+
+        .discount-label {
+            display: inline-flex;
+            margin-left: 5px;
+            padding: 3px 5px;
+            border-radius: 6px;
+            color: #3e3f43;
+            background: #ededee;
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .add-cart {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 50%;
+            color: #fff;
+            background: #111;
+            box-shadow: 0 12px 24px rgba(0,0,0,.17);
+            transition: transform .3s var(--ease), box-shadow .3s ease;
+        }
+
+        .add-cart:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 16px 30px rgba(0,0,0,.24);
+        }
+
+        .add-cart svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* =========================================================
+           PROMO MEDIA BANNER
+        ========================================================= */
+        .media-promo {
+            padding: 20px 0 84px;
+        }
+
+        .media-promo-card {
+            position: relative;
+            min-height: 355px;
+            overflow: hidden;
+            display: grid;
+            align-items: center;
+            padding: 56px;
+            border-radius: 38px;
+            color: #fff;
+            background: #0c0c0d;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .media-promo-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 78% 38%, rgba(255,255,255,.12), transparent 25%),
+                linear-gradient(115deg, rgba(0,0,0,.82), rgba(0,0,0,.28) 60%, rgba(0,0,0,.08));
+            z-index: 2;
+        }
+
+        .media-promo-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .48;
+        }
+
+        .media-promo-content {
+            position: relative;
+            z-index: 3;
+            max-width: 570px;
+        }
+
+        .media-promo-content h2 {
+            margin-top: 12px;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(38px, 5vw, 70px);
+            line-height: .98;
+            letter-spacing: -.065em;
+        }
+
+        .media-promo-content p {
+            max-width: 470px;
+            margin-top: 16px;
+            color: #c0c0c5;
+            font-size: 12px;
+            line-height: 1.75;
+        }
+
+        /* =========================================================
+           FLASH DEAL
+        ========================================================= */
+        .deal-section {
+            padding: 84px 0;
+            color: #fff;
+            background:
+                radial-gradient(circle at 10% 0, rgba(255,255,255,.08), transparent 22%),
+                radial-gradient(circle at 90% 100%, rgba(255,255,255,.05), transparent 24%),
+                #0a0a0b;
+        }
+
+        .deal-section .section-title,
+        .deal-section .eyebrow {
+            color: #fff;
+        }
+
+        .deal-section .eyebrow::before {
+            background: #fff;
+        }
+
+        .deal-section .section-description {
+            color: #a8a8ae;
+        }
+
+        .deal-head-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .countdown-label {
+            margin-right: 5px;
+            color: #999aa0;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+        }
+
+        .time-box {
+            min-width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 13px;
+            background: rgba(255,255,255,.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-family: "Manrope", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .deal-grid {
+            display: grid;
+            grid-template-columns: 1.1fr repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .deal-lead,
+        .deal-card {
+            min-height: 330px;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 28px;
+            background: rgba(255,255,255,.055);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .deal-lead {
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .deal-lead::after {
+            content: "";
+            position: absolute;
+            width: 270px;
+            height: 270px;
+            right: -100px;
+            bottom: -120px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.10);
+            box-shadow: 0 0 0 35px rgba(255,255,255,.025), 0 0 0 70px rgba(255,255,255,.018);
+        }
+
+        .deal-lead h3 {
+            max-width: 300px;
+            margin-top: 12px;
+            font-family: "Manrope", sans-serif;
+            font-size: 34px;
+            line-height: 1;
+            letter-spacing: -.05em;
+        }
+
+        .deal-lead p {
+            max-width: 300px;
+            margin-top: 14px;
+            color: #a9aab0;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .deal-card {
+            display: flex;
+            flex-direction: column;
+            padding: 18px;
+            transition: transform .35s var(--ease), background .3s ease;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,.08);
+        }
+
+        .deal-card-image {
+            height: 190px;
+            display: grid;
+            place-items: center;
+            border-radius: 20px;
+            background: rgba(255,255,255,.055);
+        }
+
+        .deal-card-image img {
+            width: 74%;
+            height: 82%;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 20px rgba(0,0,0,.30));
+        }
+
+        .deal-card h4 {
+            margin-top: 18px;
+            font-family: "Manrope", sans-serif;
+            font-size: 15px;
+            letter-spacing: -.03em;
+        }
+
+        .deal-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 9px;
+        }
+
+        .deal-price strong {
+            font-size: 13px;
+        }
+
+        .deal-price span {
+            color: #818188;
+            font-size: 9px;
+            text-decoration: line-through;
+        }
+
+        /* =========================================================
+           BRAND SPOTLIGHT
+        ========================================================= */
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr .8fr;
+            gap: 16px;
+        }
+
+        .spotlight-card {
+            position: relative;
+            min-height: 410px;
+            overflow: hidden;
+            padding: 34px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 32px;
+            background:
+                radial-gradient(circle at 82% 28%, rgba(0,0,0,.08), transparent 27%),
+                linear-gradient(145deg, #fff, #e9e9eb);
+            transition: transform .45s var(--ease), box-shadow .45s ease;
+        }
+
+        .spotlight-card.dark {
+            color: #fff;
+            border-color: rgba(255,255,255,.09);
+            background:
+                radial-gradient(circle at 82% 28%, rgba(255,255,255,.12), transparent 27%),
+                linear-gradient(145deg, #0a0a0b, #27272a);
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .spotlight-card h3 {
+            max-width: 360px;
+            margin-top: 10px;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(28px, 3vw, 44px);
+            line-height: 1;
+            letter-spacing: -.055em;
+        }
+
+        .spotlight-card p {
+            max-width: 320px;
+            margin-top: 12px;
+            color: #77797f;
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        .spotlight-card.dark p {
+            color: #aaaab0;
+        }
+
+        .spotlight-phone {
+            position: absolute;
+            right: -15px;
+            bottom: -30px;
+            width: 62%;
+            max-height: 300px;
+            object-fit: contain;
+            filter: drop-shadow(0 28px 28px rgba(0,0,0,.18));
+        }
+
+        /* =========================================================
+           CONSULT / SERVICES
+        ========================================================= */
+        .consult-card {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 36px;
+            background: rgba(255,255,255,.82);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .consult-content {
+            padding: 55px;
+        }
+
+        .consult-content h2 {
+            max-width: 620px;
+            margin-top: 12px;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(36px, 4.4vw, 62px);
+            line-height: .98;
+            letter-spacing: -.06em;
+        }
+
+        .consult-content p {
+            max-width: 510px;
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.75;
+        }
+
+        .consult-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 24px;
+        }
+
+        .consult-side {
+            position: relative;
+            min-height: 350px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,.16), transparent 30%),
+                linear-gradient(145deg, #111, #2b2b2e);
+        }
+
+        .consult-side::before,
+        .consult-side::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 50%;
+        }
+
+        .consult-side::before {
+            width: 260px;
+            height: 260px;
+            right: -70px;
+            top: -80px;
+        }
+
+        .consult-side::after {
+            width: 190px;
+            height: 190px;
+            left: -60px;
+            bottom: -80px;
+        }
+
+        .consult-glass {
+            position: absolute;
+            inset: 50% auto auto 50%;
+            width: min(310px, 78%);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 26px;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+        }
+
+        .consult-glass strong {
+            display: block;
+            font-family: "Manrope", sans-serif;
+            font-size: 24px;
+            letter-spacing: -.04em;
+        }
+
+        .consult-glass span {
+            display: block;
+            margin-top: 7px;
+            color: #b4b4ba;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 18px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 28px;
+            background: rgba(255,255,255,.68);
+            overflow: hidden;
+        }
+
+        .service-item {
+            min-height: 155px;
+            padding: 26px;
+            border-left: 1px solid var(--line);
+        }
+
+        .service-item:first-child {
+            border-left: 0;
+        }
+
+        .service-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 14px;
+            background: #f1f1f2;
+        }
+
+        .service-icon svg {
+            width: 19px;
+            height: 19px;
+            fill: none;
+            stroke: #111;
+            stroke-width: 1.55;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .service-item h3 {
+            margin-top: 15px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .service-item p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.55;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+        footer {
+            margin-top: 84px;
+            padding: 68px 0 24px;
+            color: #d5d5d8;
+            background: #09090a;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.7fr repeat(4, 1fr);
+            gap: 42px;
+            padding-bottom: 52px;
+        }
+
+        footer .brand-name {
+            color: #fff;
+        }
+
+        footer .brand-mark {
+            border: 1px solid rgba(255,255,255,.12);
+        }
+
+        .footer-copy {
+            max-width: 330px;
+            margin-top: 18px;
+            color: #818188;
+            font-size: 10px;
+            line-height: 1.75;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 4px;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .footer-column a {
+            width: fit-content;
+            color: #888990;
+            font-size: 9px;
+            transition: color .2s ease, transform .2s var(--ease);
+        }
+
+        .footer-column a:hover {
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            color: #67686e;
+            font-size: 8px;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 18px;
+        }
+
+        /* =========================================================
+           SEARCH OVERLAY
+        ========================================================= */
+        .search-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1800;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 120px 20px 40px;
+            background: rgba(232,232,234,.76);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .3s ease, visibility .3s ease;
+        }
+
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .search-panel {
+            width: min(820px, 100%);
+            padding: 28px;
+            border-radius: 30px;
+            transform: translateY(-18px) scale(.985);
+            transition: transform .4s var(--ease);
+        }
+
+        .search-overlay.active .search-panel {
+            transform: none;
+        }
+
+        .search-panel-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .search-panel-top span {
+            color: #85878d;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .close-search {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #f0f0f1;
+        }
+
+        .close-search svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #111;
+            stroke-width: 1.7;
+        }
+
+        .overlay-search-field {
+            position: relative;
+            margin-top: 18px;
+        }
+
+        .overlay-search-field svg {
+            position: absolute;
+            left: 0;
+            bottom: 18px;
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #111;
+            stroke-width: 1.5;
+        }
+
+        .overlay-search-field input {
+            width: 100%;
+            padding: 10px 0 16px 38px;
+            border: 0;
+            border-bottom: 1px solid rgba(0,0,0,.12);
+            outline: none;
+            background: transparent;
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(28px, 4.8vw, 52px);
+            font-weight: 650;
+            letter-spacing: -.05em;
+        }
+
+        .search-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 23px;
+        }
+
+        .search-suggestion {
+            padding: 9px 13px;
+            border: 1px solid rgba(0,0,0,.07);
+            border-radius: 999px;
+            color: #55575d;
+            background: rgba(255,255,255,.72);
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .search-suggestion:hover {
+            color: #fff;
+            background: #111;
+        }
+
+        /* =========================================================
+           ANIMATION
+        ========================================================= */
+        @@keyframes cartBump {
+            0%, 100% { transform: scale(1); }
+            45% { transform: scale(1.35); }
+        }
+
+        @@keyframes floatSoft {
+            0%, 100% { transform: translateY(0) rotate(11deg); }
+            50% { transform: translateY(-10px) rotate(8deg); }
+        }
+
+        .trade-device {
+            animation: floatSoft 6s ease-in-out infinite;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+        @@media (max-width: 1180px) {
+            .header-main {
+                grid-template-columns: auto 1fr auto;
+            }
+
+            .category-nav {
+                justify-content: center;
+                gap: 0;
+                padding-inline: 7px;
+                overflow: visible;
+            }
+
+            .nav-trigger {
+                padding-inline: 9px;
+                font-size: 10px;
+            }
+
+            .mega-menu-panel {
+                grid-template-columns: 1.1fr .85fr .9fr .9fr 1.1fr;
+                padding: 14px;
+            }
+
+            .mega-menu-compact {
+                grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+            }
+
+            .mega-column {
+                padding-inline: 14px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-side {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            .brand-rail {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .deal-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .spotlight-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .spotlight-card:first-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @@media (max-width: 900px) {
+            .commerce-strip-inner {
+                justify-content: center;
+            }
+
+            .strip-links {
+                display: none;
+            }
+
+            .header-main {
+                min-height: 64px;
+                grid-template-columns: auto 1fr auto;
+                gap: 12px;
+                padding: 0 12px;
+            }
+
+            .desktop-search {
+                display: none;
+            }
+
+            .header-actions {
+                justify-self: end;
+            }
+
+            .menu-button {
+                display: grid;
+            }
+
+            .category-nav {
+                display: none;
+            }
+
+            .hero-slider {
+                min-height: 540px;
+            }
+
+            .hero-slide {
+                padding: 44px 34px 76px;
+            }
+
+            .hero-content {
+                max-width: 520px;
+            }
+
+            .hero-title {
+                max-width: 520px;
+                font-size: clamp(46px, 9vw, 68px);
+            }
+
+            .hero-fallback-phone {
+                width: 45%;
+                opacity: .72;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .trust-item:nth-child(3) {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .trust-item:nth-child(4) {
+                border-top: 1px solid var(--line);
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .consult-card {
+                grid-template-columns: 1fr;
+            }
+
+            .consult-side {
+                min-height: 300px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .service-item:nth-child(3) {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .service-item:nth-child(4) {
+                border-top: 1px solid var(--line);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1.4fr 1fr 1fr;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @@media (max-width: 680px) {
+            .container,
+            .commerce-strip-inner {
+                width: min(100% - 28px, var(--container));
+            }
+
+            .header-shell {
+                width: calc(100% - 20px);
+            }
+
+            .brand-word {
+                display: none;
+            }
+
+            .brand {
+                min-width: auto;
+            }
+
+            .commerce-strip {
+                min-height: 31px;
+            }
+
+            .strip-message {
+                font-size: 9px;
+            }
+
+            .hero-commerce {
+                padding-top: 20px;
+            }
+
+            .hero-slider {
+                min-height: 520px;
+                border-radius: 28px;
+            }
+
+            .hero-slide {
+                padding: 32px 24px 78px;
+                align-items: flex-start;
+                padding-top: 60px;
+            }
+
+            .hero-title {
+                font-size: 46px;
+            }
+
+            .hero-description {
+                max-width: 350px;
+                font-size: 12px;
+            }
+
+            .hero-fallback-phone {
+                width: 55%;
+                right: -7%;
+                bottom: -2%;
+                opacity: .42;
+            }
+
+            .hero-controller {
+                left: 20px;
+                right: 20px;
+                bottom: 18px;
+            }
+
+            .hero-side {
+                grid-template-columns: 1fr;
+            }
+
+            .side-promo {
+                min-height: 240px;
+                border-radius: 27px;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-item,
+            .trust-item:nth-child(2),
+            .trust-item:nth-child(3),
+            .trust-item:nth-child(4) {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .trust-item:first-child {
+                border-top: 0;
+            }
+
+            .section {
+                padding: 66px 0;
+            }
+
+            .section-head {
+                align-items: flex-start;
+                flex-direction: column;
+                margin-bottom: 27px;
+            }
+
+            .section-title {
+                font-size: 38px;
+            }
+
+            .brand-section {
+                padding-top: 58px;
+            }
+
+            .brand-rail {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .brand-chip {
+                min-height: 66px;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .quick-card {
+                min-height: 155px;
+                padding: 17px;
+            }
+
+            .product-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-visual {
+                height: 340px;
+            }
+
+            .media-promo-card {
+                min-height: 390px;
+                padding: 34px 24px;
+                border-radius: 28px;
+            }
+
+            .deal-head-right {
+                flex-wrap: wrap;
+            }
+
+            .deal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .spotlight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .spotlight-card:first-child {
+                grid-column: auto;
+            }
+
+            .spotlight-card {
+                min-height: 360px;
+            }
+
+            .consult-content {
+                padding: 38px 24px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-item,
+            .service-item:nth-child(2),
+            .service-item:nth-child(3),
+            .service-item:nth-child(4) {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .service-item:first-child {
+                border-top: 0;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px 20px;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+
+            .footer-bottom {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .footer-legal {
+                flex-wrap: wrap;
+                gap: 10px 15px;
+            }
+        }
+
+        @@media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid #111;
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- TOP COMMERCIAL STRIP -->
+    <div class="commerce-strip">
+        <div class="commerce-strip-inner">
+            <div class="strip-message">
+                <span class="strip-dot"></span>
+                <span>Miễn phí giao hàng toàn quốc cho đơn từ 1.000.000₫</span>
+            </div>
+
+            <div class="strip-links">
+                <a href="#">Tra cứu đơn hàng</a>
+                <a href="#">Hệ thống cửa hàng</a>
+                <a href="#support">Hỗ trợ</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="site-header" id="header">
+        <div class="header-shell">
+            <div class="header-main glass">
+                <a href="#home" class="brand" aria-label="AURA PHONE - Trang chủ">
+                    <span class="brand-mark">A</span>
+                    <span class="brand-word">
+                        <span class="brand-name">AURA</span>
+                        <span class="brand-subtitle">PHONE STORE</span>
+                    </span>
+                </a>
+
+                <div class="desktop-search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="M20 20L16.4 16.4"></path>
+                    </svg>
+                    <input id="desktopSearchInput" type="search" placeholder="Tìm iPhone, Samsung, Xiaomi, Pixel..." autocomplete="off" aria-label="Tìm kiếm sản phẩm" />
+                    <span class="search-shortcut">Enter</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="action-button" id="searchButton" type="button" aria-label="Mở tìm kiếm" aria-expanded="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="M20 20L16.4 16.4"></path>
+                        </svg>
+                    </button>
+
+                    <a href="#" class="action-button" aria-label="Tài khoản">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4"></circle>
+                            <path d="M4.5 21C5.2 16.8 8 14.5 12 14.5C16 14.5 18.8 16.8 19.5 21"></path>
+                        </svg>
+                    </a>
+
+                    <a href="#" class="action-button" aria-label="Giỏ hàng">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 5H6L8 16H18L20 8H7"></path>
+                            <circle cx="9" cy="19" r="1.5"></circle>
+                            <circle cx="17" cy="19" r="1.5"></circle>
+                        </svg>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+
+                    <button class="action-button menu-button" id="menuButton" type="button" aria-label="Mở menu" aria-expanded="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 7H20"></path>
+                            <path d="M4 12H20"></path>
+                            <path d="M4 17H20"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <nav class="category-nav glass" aria-label="Danh mục chính">
+                <div class="nav-entry nav-entry-home">
+                    <a href="#home" class="nav-trigger active">Trang chủ</a>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#products" class="nav-trigger" aria-haspopup="true">
+                        Điện thoại
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Danh mục điện thoại">
+                        <div class="mega-menu-panel">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Theo thương hiệu</span>
+                                <a href="#products" class="mega-brand" data-brand-jump="apple"><strong>Apple</strong><span>iPhone & hệ sinh thái Apple</span></a>
+                                <a href="#products" class="mega-brand" data-brand-jump="samsung"><strong>Samsung</strong><span>Galaxy S, Z, A Series</span></a>
+                                <a href="#products" class="mega-brand" data-brand-jump="xiaomi"><strong>Xiaomi</strong><span>Flagship & hiệu năng cao</span></a>
+                                <a href="#products" class="mega-brand" data-brand-jump="google"><strong>Google</strong><span>Pixel & AI Phone</span></a>
+                            </div>
+
+                            <div class="mega-column">
+                                <span class="mega-kicker">Apple</span>
+                                <a href="#products" data-search-jump="iPhone 17 Pro Max">iPhone 17 Pro Max</a>
+                                <a href="#products" data-search-jump="iPhone 17">iPhone 17</a>
+                                <a href="#products" data-search-jump="iPhone">Tất cả iPhone</a>
+                                <a href="#products">iPhone giá tốt</a>
+                            </div>
+
+                            <div class="mega-column">
+                                <span class="mega-kicker">Android nổi bật</span>
+                                <a href="#products" data-search-jump="Galaxy S26 Ultra">Galaxy S26 Ultra</a>
+                                <a href="#products" data-search-jump="Xiaomi 15 Ultra">Xiaomi 15 Ultra</a>
+                                <a href="#products" data-search-jump="Pixel 10 Pro">Pixel 10 Pro</a>
+                                <a href="#products">OPPO Find Series</a>
+                            </div>
+
+                            <div class="mega-column">
+                                <span class="mega-kicker">Mua theo nhu cầu</span>
+                                <a href="#products">Flagship cao cấp</a>
+                                <a href="#products">Camera phone</a>
+                                <a href="#products">Gaming phone</a>
+                                <a href="#deals">Điện thoại giá tốt</a>
+                            </div>
+
+                            <a class="mega-feature" href="#new-arrivals">
+                                <span class="mega-feature-label">New generation</span>
+                                <strong>Smartphone mới</strong>
+                                <span>Khám phá những mẫu máy vừa cập nhật.</span>
+                                <span class="mega-feature-link">Xem sản phẩm mới →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#accessories" class="nav-trigger" aria-haspopup="true">
+                        Phụ kiện
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Danh mục phụ kiện">
+                        <div class="mega-menu-panel mega-accessories">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Phụ kiện phổ biến</span>
+                                <a href="#accessories" class="mega-brand"><strong>Tai nghe</strong><span>True Wireless, chống ồn, gaming</span></a>
+                                <a href="#accessories" class="mega-brand"><strong>Sạc & cáp</strong><span>Sạc nhanh, GaN, USB-C</span></a>
+                                <a href="#accessories" class="mega-brand"><strong>Ốp lưng & bảo vệ</strong><span>Ốp máy, kính cường lực</span></a>
+                                <a href="#accessories" class="mega-brand"><strong>Pin dự phòng</strong><span>Dung lượng cao, sạc nhanh</span></a>
+                            </div>
+
+                            <div class="mega-column">
+                                <span class="mega-kicker">Apple</span>
+                                <a href="#accessories">AirPods</a>
+                                <a href="#accessories">MagSafe</a>
+                                <a href="#accessories">Apple USB-C Adapter</a>
+                                <a href="#accessories">Ốp lưng iPhone</a>
+                            </div>
+
+                            <div class="mega-column">
+                                <span class="mega-kicker">Samsung</span>
+                                <a href="#accessories">Galaxy Buds</a>
+                                <a href="#accessories">Galaxy SmartTag</a>
+                                <a href="#accessories">Samsung Charger</a>
+                                <a href="#accessories">Ốp lưng Galaxy</a>
+                            </div>
+
+                            <div class="mega-column">
+                                <span class="mega-kicker">Hãng phụ kiện</span>
+                                <a href="#accessories">Anker</a>
+                                <a href="#accessories">Baseus</a>
+                                <a href="#accessories">UGREEN</a>
+                                <a href="#accessories">Belkin</a>
+                            </div>
+
+                            <a class="mega-feature mega-feature-dark" href="#deals">
+                                <span class="mega-feature-label">Accessory deal</span>
+                                <strong>Combo tiết kiệm</strong>
+                                <span>Mua máy kèm phụ kiện với ưu đãi tốt hơn.</span>
+                                <span class="mega-feature-link">Xem ưu đãi →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#brands" class="nav-trigger" aria-haspopup="true">
+                        Thương hiệu
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Thương hiệu điện thoại">
+                        <div class="mega-menu-panel mega-menu-compact">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Thương hiệu nổi bật</span>
+                                <a href="#products" class="mega-brand" data-brand-jump="apple"><strong>Apple</strong><span>iPhone</span></a>
+                                <a href="#products" class="mega-brand" data-brand-jump="samsung"><strong>Samsung</strong><span>Galaxy</span></a>
+                                <a href="#products" class="mega-brand" data-brand-jump="xiaomi"><strong>Xiaomi</strong><span>Xiaomi Series</span></a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Android</span>
+                                <a href="#products" data-brand-jump="google">Google Pixel</a>
+                                <a href="#brands">OPPO</a>
+                                <a href="#brands">HONOR</a>
+                                <a href="#brands">Nothing</a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Khám phá</span>
+                                <a href="#brands">Tất cả thương hiệu</a>
+                                <a href="#new-arrivals">Sản phẩm mới theo hãng</a>
+                                <a href="#products">So sánh sản phẩm</a>
+                                <a href="#consult">Tư vấn chọn hãng</a>
+                            </div>
+                            <a class="mega-feature" href="#brands">
+                                <span class="mega-feature-label">Brand hub</span>
+                                <strong>8+ thương hiệu</strong>
+                                <span>Tìm nhanh hệ sinh thái phù hợp với bạn.</span>
+                                <span class="mega-feature-link">Khám phá →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#deals" class="nav-trigger" aria-haspopup="true">
+                        Khuyến mãi
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Khuyến mãi">
+                        <div class="mega-menu-panel mega-menu-compact">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Ưu đãi hôm nay</span>
+                                <a href="#deals" class="mega-brand"><strong>Flash Deal</strong><span>Deal giới hạn theo thời gian</span></a>
+                                <a href="#deals" class="mega-brand"><strong>Giảm trực tiếp</strong><span>Giá tốt trên sản phẩm chọn lọc</span></a>
+                                <a href="#deals" class="mega-brand"><strong>Combo phụ kiện</strong><span>Mua kèm tiết kiệm hơn</span></a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Theo hình thức</span>
+                                <a href="#deals">Trả góp 0%</a>
+                                <a href="#deals">Thu cũ đổi mới</a>
+                                <a href="#deals">Voucher thanh toán</a>
+                                <a href="#deals">Ưu đãi thành viên</a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Theo sản phẩm</span>
+                                <a href="#products">Deal iPhone</a>
+                                <a href="#products">Deal Samsung</a>
+                                <a href="#products">Deal Xiaomi</a>
+                                <a href="#products">Deal Pixel</a>
+                            </div>
+                            <a class="mega-feature mega-feature-dark" href="#deals">
+                                <span class="mega-feature-label">Limited time</span>
+                                <strong>Flash Sale</strong>
+                                <span>Săn deal trước khi chương trình kết thúc.</span>
+                                <span class="mega-feature-link">Xem ngay →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#new-arrivals" class="nav-trigger" aria-haspopup="true">
+                        Sản phẩm mới
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Sản phẩm mới">
+                        <div class="mega-menu-panel mega-menu-compact">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Mới cập nhật</span>
+                                <a href="#products" class="mega-brand" data-search-jump="iPhone 17 Pro Max"><strong>iPhone 17 Pro Max</strong><span>Apple · Flagship</span></a>
+                                <a href="#products" class="mega-brand" data-search-jump="Galaxy S26 Ultra"><strong>Galaxy S26 Ultra</strong><span>Samsung · Flagship</span></a>
+                                <a href="#products" class="mega-brand" data-search-jump="Xiaomi 15 Ultra"><strong>Xiaomi 15 Ultra</strong><span>Xiaomi · Camera</span></a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Google</span>
+                                <a href="#products" data-search-jump="Pixel 10 Pro">Pixel 10 Pro</a>
+                                <a href="#products" data-search-jump="Pixel 10">Pixel 10</a>
+                                <a href="#new-arrivals">Tất cả máy mới</a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Khám phá nhanh</span>
+                                <a href="#new-arrivals">Vừa ra mắt</a>
+                                <a href="#products">Sắp mở bán</a>
+                                <a href="#products">Đặt trước</a>
+                                <a href="#brands">Theo thương hiệu</a>
+                            </div>
+                            <a class="mega-feature" href="#new-arrivals">
+                                <span class="mega-feature-label">New arrivals</span>
+                                <strong>Luôn cập nhật.</strong>
+                                <span>Khu vực dành cho những model mới nhất của cửa hàng.</span>
+                                <span class="mega-feature-link">Xem tất cả →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#consult" class="nav-trigger" aria-haspopup="true">
+                        Tư vấn chọn máy
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Tư vấn chọn máy">
+                        <div class="mega-menu-panel mega-menu-compact">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Theo nhu cầu</span>
+                                <a href="#products" class="mega-brand"><strong>Chụp ảnh đẹp</strong><span>Camera, zoom, quay video</span></a>
+                                <a href="#products" class="mega-brand"><strong>Chơi game</strong><span>Hiệu năng và tản nhiệt</span></a>
+                                <a href="#products" class="mega-brand"><strong>Pin lâu</strong><span>Dùng dài ngày, sạc nhanh</span></a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Theo ngân sách</span>
+                                <a href="#products">Dưới 10 triệu</a>
+                                <a href="#products">10 – 20 triệu</a>
+                                <a href="#products">20 – 30 triệu</a>
+                                <a href="#products">Trên 30 triệu</a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Công cụ mua sắm</span>
+                                <a href="#consult">So sánh điện thoại</a>
+                                <a href="#consult">Tư vấn theo nhu cầu</a>
+                                <a href="#deals">Tìm deal phù hợp</a>
+                                <a href="#support">Hỏi chuyên viên</a>
+                            </div>
+                            <a class="mega-feature mega-feature-dark" href="#consult">
+                                <span class="mega-feature-label">Need help?</span>
+                                <strong>Chọn đúng máy.</strong>
+                                <span>Đi từ nhu cầu và ngân sách thay vì chọn ngẫu nhiên.</span>
+                                <span class="mega-feature-link">Bắt đầu tư vấn →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-entry">
+                    <a href="#support" class="nav-trigger" aria-haspopup="true">
+                        Dịch vụ
+                        <svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9L12 14L17 9"></path></svg>
+                    </a>
+                    <div class="mega-menu" role="group" aria-label="Dịch vụ">
+                        <div class="mega-menu-panel mega-menu-compact">
+                            <div class="mega-column mega-column-primary">
+                                <span class="mega-kicker">Sau bán hàng</span>
+                                <a href="#support" class="mega-brand"><strong>Bảo hành</strong><span>Kiểm tra và hỗ trợ thiết bị</span></a>
+                                <a href="#support" class="mega-brand"><strong>Đổi trả</strong><span>Chính sách rõ ràng</span></a>
+                                <a href="#support" class="mega-brand"><strong>Giao hàng</strong><span>Theo dõi trạng thái đơn hàng</span></a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Mua hàng</span>
+                                <a href="#support">Trả góp</a>
+                                <a href="#support">Thanh toán</a>
+                                <a href="#support">Xuất hóa đơn</a>
+                                <a href="#support">Tra cứu đơn hàng</a>
+                            </div>
+                            <div class="mega-column">
+                                <span class="mega-kicker">Hỗ trợ</span>
+                                <a href="#support">Liên hệ cửa hàng</a>
+                                <a href="#support">Câu hỏi thường gặp</a>
+                                <a href="#support">Hướng dẫn mua hàng</a>
+                                <a href="#support">Chính sách bảo mật</a>
+                            </div>
+                            <a class="mega-feature" href="#support">
+                                <span class="mega-feature-label">Customer care</span>
+                                <strong>Hỗ trợ khi cần.</strong>
+                                <span>Đồng hành từ lúc chọn máy đến sau khi mua.</span>
+                                <span class="mega-feature-link">Trung tâm hỗ trợ →</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-card glass">
+            <a href="#home">Trang chủ <span>→</span></a>
+            <a href="#products">Điện thoại <span>→</span></a>
+            <a href="#accessories">Phụ kiện <span>→</span></a>
+            <a href="#brands">Thương hiệu <span>→</span></a>
+            <a href="#deals">Khuyến mãi <span>→</span></a>
+            <a href="#new-arrivals">Sản phẩm mới <span>→</span></a>
+            <a href="#consult">Tư vấn chọn máy <span>→</span></a>
+            <a href="#support">Dịch vụ <span>→</span></a>
+        </div>
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+    <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+        <div class="search-panel glass">
+            <div class="search-panel-top">
+                <span>Tìm kiếm sản phẩm</span>
+                <button class="close-search" id="closeSearch" type="button" aria-label="Đóng tìm kiếm">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 6L18 18"></path>
+                        <path d="M18 6L6 18"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="overlay-search-field">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M20 20L16.4 16.4"></path>
+                </svg>
+                <input id="searchInput" type="search" placeholder="Bạn đang tìm mẫu nào?" autocomplete="off" />
+            </div>
+
+            <div class="search-suggestions">
+                <button class="search-suggestion" type="button" data-search="iPhone">iPhone</button>
+                <button class="search-suggestion" type="button" data-search="Samsung">Samsung</button>
+                <button class="search-suggestion" type="button" data-search="Xiaomi">Xiaomi</button>
+                <button class="search-suggestion" type="button" data-search="Pixel">Google Pixel</button>
+                <button class="search-suggestion" type="button" data-search="Ultra">Ultra</button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- =====================================================
+             HERO COMMERCE / BANNER MANAGER READY
+             Bạn chỉ cần thay các file trong /assets/banners/.
+             Slide 1: image
+             Slide 2: video mp4
+             Slide 3: image
+        ====================================================== -->
+        <section class="hero-commerce" id="home">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-slider" id="heroSlider">
+                        <!-- BANNER 01 - IMAGE -->
+                        <article class="hero-slide active" data-slide="0" data-fallback="dark">
+                            <div class="hero-media">
+                                <img class="banner-upload-media"
+                                     src="/assets/banners/banner-01.jpg"
+                                     alt="Banner sản phẩm nổi bật"
+                                     onerror="this.style.display='none'" />
+                                <img class="hero-fallback-phone" src="~/assets/phones/iphone-17.svg" alt="" aria-hidden="true" />
+                            </div>
+
+                            <div class="hero-content">
+                                <span class="hero-kicker"><span class="hero-kicker-dot"></span> New flagship</span>
+                                <h1 class="hero-title">Flagship mới. Trải nghiệm mới.</h1>
+                                <p class="hero-description">Khám phá smartphone cao cấp mới nhất, chính hãng, hỗ trợ trả góp và giao hàng toàn quốc.</p>
+                                <div class="hero-price">Từ 28.990.000₫</div>
+                                <div class="hero-actions">
+                                    <a href="#new-arrivals" class="btn btn-light">Mua ngay</a>
+                                    <a href="#products" class="btn btn-glass">Xem tất cả sản phẩm</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- BANNER 02 - VIDEO -->
+                        <article class="hero-slide" data-slide="1" data-fallback="dark">
+                            <div class="hero-media">
+                                <video class="banner-upload-media hero-video" muted playsinline loop preload="metadata" poster="/assets/banners/banner-video-poster.jpg">
+                                    <source src="/assets/banners/banner-02.mp4" type="video/mp4" />
+                                </video>
+                                <img class="hero-fallback-phone" src="~/assets/phones/samsung-s26.svg" alt="" aria-hidden="true" />
+                            </div>
+
+                            <div class="hero-content">
+                                <span class="hero-kicker"><span class="hero-kicker-dot"></span> Video campaign</span>
+                                <h2 class="hero-title">Chuyển động của công nghệ.</h2>
+                                <p class="hero-description">Khu banner này hỗ trợ video MP4. Bạn có thể dùng cho launch event, campaign thương hiệu hoặc video giới thiệu sản phẩm.</p>
+                                <div class="hero-actions">
+                                    <a href="#brands" class="btn btn-light">Khám phá thương hiệu</a>
+                                    <a href="#deals" class="btn btn-glass">Xem ưu đãi</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- BANNER 03 - IMAGE LIGHT -->
+                        <article class="hero-slide" data-slide="2" data-fallback="light">
+                            <div class="hero-media">
+                                <img class="banner-upload-media"
+                                     src="/assets/banners/banner-03.jpg"
+                                     alt="Banner bộ sưu tập smartphone"
+                                     onerror="this.style.display='none'" />
+                                <img class="hero-fallback-phone" src="~/assets/phones/pixel-10.svg" alt="" aria-hidden="true" />
+                            </div>
+
+                            <div class="hero-content">
+                                <span class="hero-kicker"><span class="hero-kicker-dot"></span> Curated collection</span>
+                                <h2 class="hero-title">Nhiều thương hiệu. Một nơi để chọn.</h2>
+                                <p class="hero-description">Apple, Samsung, Google, Xiaomi và nhiều thương hiệu khác trong cùng một trải nghiệm mua sắm rõ ràng, hiện đại.</p>
+                                <div class="hero-actions">
+                                    <a href="#products" class="btn btn-dark">Xem điện thoại</a>
+                                    <a href="#consult" class="btn btn-glass">Tư vấn chọn máy</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <div class="hero-controller">
+                            <div class="hero-dots" aria-label="Chọn banner">
+                                <button class="hero-dot active" type="button" data-slide-to="0" aria-label="Banner 1"></button>
+                                <button class="hero-dot" type="button" data-slide-to="1" aria-label="Banner 2"></button>
+                                <button class="hero-dot" type="button" data-slide-to="2" aria-label="Banner 3"></button>
+                            </div>
+
+                            <div class="hero-arrows">
+                                <button class="hero-arrow" id="heroPrev" type="button" aria-label="Banner trước">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5L8 12L15 19"></path></svg>
+                                </button>
+                                <button class="hero-arrow" id="heroNext" type="button" aria-label="Banner tiếp theo">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5L16 12L9 19"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="hero-side">
+                        <article class="side-promo dark reveal">
+                            <span class="promo-label">Hot deal</span>
+                            <h2>Deal công nghệ mỗi ngày.</h2>
+                            <p>Giá tốt cho flagship, phụ kiện và các mẫu máy được quan tâm nhiều.</p>
+                            <a href="#deals" class="text-link">Xem deal <span>→</span></a>
+                            <div class="promo-orb" aria-hidden="true"></div>
+                        </article>
+
+                        <article class="side-promo light reveal delay-1">
+                            <span class="promo-label">Trade-in</span>
+                            <h2>Thu cũ. Lên đời dễ hơn.</h2>
+                            <p>Định giá thiết bị cũ và bù thêm để nâng cấp lên smartphone mới.</p>
+                            <a href="#consult" class="text-link">Tìm hiểu <span>→</span></a>
+                            <img class="trade-device" src="~/assets/phones/xiaomi-15.svg" alt="Smartphone trade-in" />
+                        </article>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST -->
+        <section class="trust-bar">
+            <div class="container">
+                <div class="trust-grid reveal">
+                    <div class="trust-item">
+                        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M12 3L19 6V11C19 15.5 16.3 19 12 21C7.7 19 5 15.5 5 11V6L12 3Z"></path><path d="M9 12L11 14L15 10"></path></svg></div>
+                        <div><strong>Chính hãng 100%</strong><span>Nguồn gốc rõ ràng, bảo hành minh bạch.</span></div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M3 6H14V17H3V6Z"></path><path d="M14 10H18L21 13V17H14V10Z"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg></div>
+                        <div><strong>Giao hàng toàn quốc</strong><span>Theo dõi trạng thái đơn hàng rõ ràng.</span></div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 10H21"></path><path d="M7 15H11"></path></svg></div>
+                        <div><strong>Trả góp linh hoạt</strong><span>Nhiều phương thức thanh toán phù hợp.</span></div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M4 12A8 8 0 0 1 18.5 6.5"></path><path d="M18.5 6.5V3"></path><path d="M18.5 6.5H15"></path><path d="M20 12A8 8 0 0 1 5.5 17.5"></path></svg></div>
+                        <div><strong>Đổi trả dễ dàng</strong><span>Chính sách rõ ràng, hỗ trợ nhanh chóng.</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRANDS -->
+        <section class="brand-section" id="brands">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">Shop by brand</span>
+                        <h2 class="section-title">Chọn theo thương hiệu.</h2>
+                        <p class="section-description">Khu thương hiệu được đặt gần đầu trang để khách hàng đi thẳng vào hệ sinh thái họ quan tâm.</p>
+                    </div>
+                </div>
+
+                <div class="brand-rail reveal delay-1">
+                    <a class="brand-chip" href="#products" data-brand-jump="apple">APPLE</a>
+                    <a class="brand-chip" href="#products" data-brand-jump="samsung">SAMSUNG</a>
+                    <a class="brand-chip" href="#products" data-brand-jump="xiaomi">XIAOMI</a>
+                    <a class="brand-chip" href="#products" data-brand-jump="google">GOOGLE</a>
+                    <a class="brand-chip" href="#products">OPPO</a>
+                    <a class="brand-chip" href="#products">HONOR</a>
+                    <a class="brand-chip" href="#products">SONY</a>
+                    <a class="brand-chip" href="#products">NOTHING</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK SHOP -->
+        <section class="quick-shop">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">Mua nhanh theo nhu cầu</span>
+                        <h2 class="section-title">Tìm đúng máy nhanh hơn.</h2>
+                    </div>
+                    <a href="#products" class="text-link">Xem tất cả <svg viewBox="0 0 24 24"><path d="M5 12H19"></path><path d="M13 6L19 12L13 18"></path></svg></a>
+                </div>
+
+                <div class="quick-grid">
+                    <a href="#products" class="quick-card reveal">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"></rect><path d="M10 5H14"></path><path d="M11 19H13"></path></svg></div>
+                        <div><h3>Flagship</h3><p>Hiệu năng và trải nghiệm cao cấp.</p></div>
+                    </a>
+                    <a href="#products" class="quick-card reveal delay-1">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2"></circle><path d="M17 7L20 4"></path></svg></div>
+                        <div><h3>Camera phone</h3><p>Ưu tiên chụp ảnh và quay video.</p></div>
+                    </a>
+                    <a href="#products" class="quick-card reveal delay-2">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M7 3H17L20 8V16L17 21H7L4 16V8L7 3Z"></path><path d="M8 12H16"></path></svg></div>
+                        <div><h3>Gaming</h3><p>Màn hình nhanh, hiệu năng mạnh.</p></div>
+                    </a>
+                    <a href="#products" class="quick-card reveal">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M8 2V6"></path><path d="M16 2V6"></path><rect x="4" y="5" width="16" height="16" rx="3"></rect><path d="M8 11H16"></path></svg></div>
+                        <div><h3>Pin lâu</h3><p>Dùng dài ngày, sạc ít hơn.</p></div>
+                    </a>
+                    <a href="#deals" class="quick-card reveal delay-1">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M4 8V4H8"></path><path d="M20 16V20H16"></path><path d="M5 5L19 19"></path><path d="M9 15L15 9"></path></svg></div>
+                        <div><h3>Giá tốt</h3><p>Ưu đãi và deal theo từng thời điểm.</p></div>
+                    </a>
+                    <a href="#consult" class="quick-card reveal delay-2">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M20 15.5C20 17.4 18.4 19 16.5 19H10L5 21V16.5C3.8 15.7 3 14.3 3 12.5V8.5C3 6.6 4.6 5 6.5 5H16.5C18.4 5 20 6.6 20 8.5V15.5Z"></path></svg></div>
+                        <div><h3>Cần tư vấn?</h3><p>Chọn máy theo nhu cầu và ngân sách.</p></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ACCESSORIES -->
+        <section class="quick-shop" id="accessories">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">Accessories</span>
+                        <h2 class="section-title">Phụ kiện cho mọi thiết bị.</h2>
+                        <p class="section-description">Nhóm phụ kiện được tách riêng để khách hàng dễ tìm đúng sản phẩm đi kèm điện thoại thay vì trộn chung với smartphone.</p>
+                    </div>
+                    <a href="#accessories" class="text-link">Xem phụ kiện <svg viewBox="0 0 24 24"><path d="M5 12H19"></path><path d="M13 6L19 12L13 18"></path></svg></a>
+                </div>
+
+                <div class="quick-grid">
+                    <a href="#accessories" class="quick-card reveal">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M5 13V11A7 7 0 0 1 19 11V13"></path><path d="M5 12H3V17H7V13C7 12.4 6.6 12 6 12H5Z"></path><path d="M19 12H21V17H17V13C17 12.4 17.4 12 18 12H19Z"></path></svg></div>
+                        <div><h3>Tai nghe</h3><p>AirPods, Galaxy Buds, TWS và gaming.</p></div>
+                    </a>
+                    <a href="#accessories" class="quick-card reveal delay-1">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M9 3V8"></path><path d="M15 3V8"></path><path d="M7 8H17V12C17 15 15 17 12 17C9 17 7 15 7 12V8Z"></path><path d="M12 17V21"></path></svg></div>
+                        <div><h3>Sạc nhanh</h3><p>USB-C, GaN và adapter công suất cao.</p></div>
+                    </a>
+                    <a href="#accessories" class="quick-card reveal delay-2">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"></rect><path d="M9 5H15"></path><path d="M9 19H15"></path></svg></div>
+                        <div><h3>Ốp & bảo vệ</h3><p>Ốp lưng, kính cường lực và bảo vệ camera.</p></div>
+                    </a>
+                    <a href="#accessories" class="quick-card reveal">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"></rect><path d="M19 10H21V14H19"></path><path d="M9 12H15"></path></svg></div>
+                        <div><h3>Pin dự phòng</h3><p>Dung lượng lớn, sạc nhanh và MagSafe.</p></div>
+                    </a>
+                    <a href="#accessories" class="quick-card reveal delay-1">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M8 2H16L17 6H7L8 2Z"></path><rect x="6" y="6" width="12" height="12" rx="4"></rect><path d="M7 18H17L16 22H8L7 18Z"></path></svg></div>
+                        <div><h3>Thiết bị đeo</h3><p>Smartwatch và phụ kiện sức khỏe.</p></div>
+                    </a>
+                    <a href="#deals" class="quick-card reveal delay-2">
+                        <div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M4 7H20V17H4V7Z"></path><path d="M8 7C8 5.3 9.3 4 11 4C12.1 4 13 4.8 13 6C13 4.8 13.9 4 15 4C16.7 4 18 5.3 18 7"></path><path d="M12 7V17"></path></svg></div>
+                        <div><h3>Combo phụ kiện</h3><p>Mua cùng điện thoại với giá tốt hơn.</p></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW ARRIVALS -->
+        <section class="section" id="new-arrivals">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">New arrivals</span>
+                        <h2 class="section-title">Sản phẩm mới.</h2>
+                        <p class="section-description">Khu vực ưu tiên cho các mẫu vừa ra mắt, pre-order hoặc sản phẩm đang được thị trường quan tâm.</p>
+                    </div>
+                    <a href="#products" class="text-link">Xem toàn bộ <svg viewBox="0 0 24 24"><path d="M5 12H19"></path><path d="M13 6L19 12L13 18"></path></svg></a>
+                </div>
+
+                <div class="product-grid">
+                    <article class="product-card reveal" data-brand="apple" data-name="iphone 17 pro max">
+                        <div class="product-visual">
+                            <span class="product-badge">NEW</span>
+                            <button class="favorite-button" type="button" aria-label="Yêu thích iPhone 17 Pro Max" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button>
+                            <img src="~/assets/phones/iphone-17.svg" alt="iPhone 17 Pro Max" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">APPLE</div>
+                            <h3 class="product-name">iPhone 17 Pro Max</h3>
+                            <p class="product-variant">Titanium · 512GB · Chính hãng VN/A</p>
+                            <div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.9</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div>
+                            <div class="product-price-row"><div class="price-stack"><strong class="price-current">39.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm iPhone 17 Pro Max vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div>
+                        </div>
+                    </article>
+
+                    <article class="product-card reveal delay-1" data-brand="samsung" data-name="galaxy s26 ultra samsung">
+                        <div class="product-visual">
+                            <span class="product-badge">HOT</span>
+                            <button class="favorite-button" type="button" aria-label="Yêu thích Galaxy S26 Ultra" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button>
+                            <img src="~/assets/phones/samsung-s26.svg" alt="Samsung Galaxy S26 Ultra" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">SAMSUNG</div>
+                            <h3 class="product-name">Galaxy S26 Ultra</h3>
+                            <p class="product-variant">Titanium Black · 512GB · Chính hãng</p>
+                            <div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.8</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div>
+                            <div class="product-price-row"><div class="price-stack"><strong class="price-current">34.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm Galaxy S26 Ultra vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div>
+                        </div>
+                    </article>
+
+                    <article class="product-card reveal delay-2" data-brand="xiaomi" data-name="xiaomi 15 ultra">
+                        <div class="product-visual">
+                            <span class="product-badge">NEW</span>
+                            <button class="favorite-button" type="button" aria-label="Yêu thích Xiaomi 15 Ultra" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button>
+                            <img src="~/assets/phones/xiaomi-15.svg" alt="Xiaomi 15 Ultra" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">XIAOMI</div>
+                            <h3 class="product-name">Xiaomi 15 Ultra</h3>
+                            <p class="product-variant">White Silver · 512GB · Leica Camera</p>
+                            <div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.8</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div>
+                            <div class="product-price-row"><div class="price-stack"><strong class="price-current">29.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm Xiaomi 15 Ultra vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div>
+                        </div>
+                    </article>
+
+                    <article class="product-card reveal delay-3" data-brand="google" data-name="google pixel 10 pro">
+                        <div class="product-visual">
+                            <span class="product-badge">NEW</span>
+                            <button class="favorite-button" type="button" aria-label="Yêu thích Pixel 10 Pro" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button>
+                            <img src="~/assets/phones/pixel-10.svg" alt="Google Pixel 10 Pro" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">GOOGLE</div>
+                            <h3 class="product-name">Pixel 10 Pro</h3>
+                            <p class="product-variant">Porcelain · 256GB · AI Camera</p>
+                            <div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.7</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div>
+                            <div class="product-price-row"><div class="price-stack"><strong class="price-current">24.990.000₫</strong><span class="price-old">26.990.000₫</span><span class="discount-label">-7%</span></div><button class="add-cart" type="button" aria-label="Thêm Pixel 10 Pro vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEDIA PROMO -->
+        <section class="media-promo">
+            <div class="container">
+                <article class="media-promo-card reveal">
+                    <!-- Có thể thay bằng ảnh banner ngang: /assets/banners/wide-campaign.jpg -->
+                    <img class="media-promo-bg" src="/assets/banners/wide-campaign.jpg" alt="Campaign banner" onerror="this.style.display='none'" />
+                    <div class="media-promo-content">
+                        <span class="eyebrow" style="color:#fff">Campaign banner</span>
+                        <h2>Không gian dành cho chiến dịch lớn.</h2>
+                        <p>Banner ngang có thể dùng cho ngày mở bán, voucher festival, flash sale hoặc chiến dịch riêng của từng thương hiệu.</p>
+                        <div class="hero-actions"><a href="#deals" class="btn btn-light">Khám phá ưu đãi</a></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- FLASH DEAL -->
+        <section class="deal-section" id="deals">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">Flash deal</span>
+                        <h2 class="section-title">Giá tốt trong hôm nay.</h2>
+                        <p class="section-description">Deal được tách thành một vùng tối để tạo nhịp thị giác và làm nổi giá, CTA và thời gian còn lại.</p>
+                    </div>
+                    <div class="deal-head-right">
+                        <span class="countdown-label">Kết thúc sau</span>
+                        <span class="time-box" id="dealHour">00</span>
+                        <span class="time-box" id="dealMinute">00</span>
+                        <span class="time-box" id="dealSecond">00</span>
+                    </div>
+                </div>
+
+                <div class="deal-grid">
+                    <article class="deal-lead reveal">
+                        <span class="promo-label">Deal zone</span>
+                        <h3>Săn deal flagship & phụ kiện.</h3>
+                        <p>Khu vực có thể kết nối dữ liệu promotion/voucher về sau mà không cần thay đổi bố cục tổng thể.</p>
+                        <div class="hero-actions"><a href="#products" class="btn btn-light">Xem tất cả deal</a></div>
+                    </article>
+
+                    <article class="deal-card reveal delay-1">
+                        <div class="deal-card-image"><img src="~/assets/phones/iphone-17.svg" alt="iPhone deal" /></div>
+                        <h4>iPhone Flagship</h4>
+                        <div class="deal-price"><strong>36.990.000₫</strong><span>39.990.000₫</span></div>
+                    </article>
+
+                    <article class="deal-card reveal delay-2">
+                        <div class="deal-card-image"><img src="~/assets/phones/samsung-s26.svg" alt="Samsung deal" /></div>
+                        <h4>Galaxy Ultra</h4>
+                        <div class="deal-price"><strong>31.990.000₫</strong><span>34.990.000₫</span></div>
+                    </article>
+
+                    <article class="deal-card reveal delay-3">
+                        <div class="deal-card-image"><img src="~/assets/phones/xiaomi-15.svg" alt="Xiaomi deal" /></div>
+                        <h4>Xiaomi Ultra</h4>
+                        <div class="deal-price"><strong>27.990.000₫</strong><span>29.990.000₫</span></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- BEST SELLERS / MAIN COMMERCE GRID -->
+        <section class="section" id="products">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">Best sellers</span>
+                        <h2 class="section-title">Điện thoại được quan tâm.</h2>
+                        <p class="section-description">Grid chính hỗ trợ lọc nhanh theo hãng và tìm kiếm tên sản phẩm ngay trên frontend.</p>
+                    </div>
+                </div>
+
+                <div class="product-toolbar reveal">
+                    <div class="filter-chips" id="productFilters">
+                        <button class="filter-chip active" type="button" data-filter="all">Tất cả</button>
+                        <button class="filter-chip" type="button" data-filter="apple">Apple</button>
+                        <button class="filter-chip" type="button" data-filter="samsung">Samsung</button>
+                        <button class="filter-chip" type="button" data-filter="xiaomi">Xiaomi</button>
+                        <button class="filter-chip" type="button" data-filter="google">Google</button>
+                    </div>
+                    <span id="productResultText" style="color:#8b8d92;font-size:10px;font-weight:600">8 sản phẩm</span>
+                </div>
+
+                <div class="product-grid" id="mainProductGrid">
+                    <article class="product-card reveal" data-brand="apple" data-name="iphone 17 pro max apple">
+                        <div class="product-visual"><span class="product-badge">BEST SELLER</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/iphone-17.svg" alt="iPhone 17 Pro Max" /></div>
+                        <div class="product-info"><div class="product-brand">APPLE</div><h3 class="product-name">iPhone 17 Pro Max</h3><p class="product-variant">Titanium · 512GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.9</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">39.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal delay-1" data-brand="samsung" data-name="samsung galaxy s26 ultra">
+                        <div class="product-visual"><span class="product-badge">HOT</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/samsung-s26.svg" alt="Galaxy S26 Ultra" /></div>
+                        <div class="product-info"><div class="product-brand">SAMSUNG</div><h3 class="product-name">Galaxy S26 Ultra</h3><p class="product-variant">Titanium Black · 512GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.8</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">34.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal delay-2" data-brand="xiaomi" data-name="xiaomi 15 ultra">
+                        <div class="product-visual"><span class="product-badge">NEW</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/xiaomi-15.svg" alt="Xiaomi 15 Ultra" /></div>
+                        <div class="product-info"><div class="product-brand">XIAOMI</div><h3 class="product-name">Xiaomi 15 Ultra</h3><p class="product-variant">White Silver · 512GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.8</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">29.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal delay-3" data-brand="google" data-name="google pixel 10 pro">
+                        <div class="product-visual"><span class="product-badge">SALE</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/pixel-10.svg" alt="Pixel 10 Pro" /></div>
+                        <div class="product-info"><div class="product-brand">GOOGLE</div><h3 class="product-name">Pixel 10 Pro</h3><p class="product-variant">Porcelain · 256GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.7</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">24.990.000₫</strong><span class="price-old">26.990.000₫</span><span class="discount-label">-7%</span></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal" data-brand="apple" data-name="iphone 17 apple">
+                        <div class="product-visual"><span class="product-badge">POPULAR</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/iphone-17.svg" alt="iPhone 17" /></div>
+                        <div class="product-info"><div class="product-brand">APPLE</div><h3 class="product-name">iPhone 17</h3><p class="product-variant">Black · 256GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.8</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">28.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal delay-1" data-brand="samsung" data-name="samsung galaxy s26 plus">
+                        <div class="product-visual"><span class="product-badge">POPULAR</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/samsung-s26.svg" alt="Galaxy S26 Plus" /></div>
+                        <div class="product-info"><div class="product-brand">SAMSUNG</div><h3 class="product-name">Galaxy S26+</h3><p class="product-variant">Graphite · 256GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.7</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">26.990.000₫</strong><span class="price-old">28.990.000₫</span><span class="discount-label">-6%</span></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal delay-2" data-brand="xiaomi" data-name="xiaomi 15 pro">
+                        <div class="product-visual"><span class="product-badge">VALUE</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/xiaomi-15.svg" alt="Xiaomi 15 Pro" /></div>
+                        <div class="product-info"><div class="product-brand">XIAOMI</div><h3 class="product-name">Xiaomi 15 Pro</h3><p class="product-variant">Silver · 256GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.7</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">21.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+
+                    <article class="product-card reveal delay-3" data-brand="google" data-name="google pixel 10">
+                        <div class="product-visual"><span class="product-badge">AI PHONE</span><button class="favorite-button" type="button" aria-label="Yêu thích" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.8 8.7C20.8 13.4 12 19 12 19S3.2 13.4 3.2 8.7C3.2 6.2 5 4.5 7.2 4.5C9 4.5 10.5 5.5 12 7C13.5 5.5 15 4.5 16.8 4.5C19 4.5 20.8 6.2 20.8 8.7Z"></path></svg></button><img src="~/assets/phones/pixel-10.svg" alt="Pixel 10" /></div>
+                        <div class="product-info"><div class="product-brand">GOOGLE</div><h3 class="product-name">Pixel 10</h3><p class="product-variant">Obsidian · 256GB</p><div class="product-meta"><span class="rating"><svg viewBox="0 0 24 24"><path d="M12 3.8L14.5 8.9L20.2 9.7L16.1 13.7L17.1 19.3L12 16.6L6.9 19.3L7.9 13.7L3.8 9.7L9.5 8.9L12 3.8Z"></path></svg>4.6</span><span class="meta-dot"></span><span class="installment">Trả góp 0%</span></div><div class="product-price-row"><div class="price-stack"><strong class="price-current">19.990.000₫</strong></div><button class="add-cart" type="button" aria-label="Thêm vào giỏ"><svg viewBox="0 0 24 24"><path d="M12 5V19"></path><path d="M5 12H19"></path></svg></button></div></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRAND SPOTLIGHT -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">Brand spotlight</span>
+                        <h2 class="section-title">Khám phá theo hệ sinh thái.</h2>
+                    </div>
+                </div>
+
+                <div class="spotlight-grid">
+                    <article class="spotlight-card dark reveal">
+                        <span class="promo-label">Apple</span>
+                        <h3>iPhone. Tinh gọn trong từng lựa chọn.</h3>
+                        <p>Flagship, model tiêu chuẩn và các lựa chọn dung lượng phù hợp nhiều nhóm khách hàng.</p>
+                        <a href="#products" class="text-link" style="color:#fff;margin-top:20px">Xem Apple <span>→</span></a>
+                        <img class="spotlight-phone" src="~/assets/phones/iphone-17.svg" alt="iPhone collection" />
+                    </article>
+
+                    <article class="spotlight-card reveal delay-1">
+                        <span class="promo-label">Samsung</span>
+                        <h3>Galaxy. Mạnh mẽ và linh hoạt.</h3>
+                        <p>Dòng Ultra, Plus và flagship dành cho nhiều nhu cầu sử dụng.</p>
+                        <a href="#products" class="text-link" style="margin-top:20px">Xem Samsung <span>→</span></a>
+                        <img class="spotlight-phone" src="~/assets/phones/samsung-s26.svg" alt="Samsung collection" />
+                    </article>
+
+                    <article class="spotlight-card reveal delay-2">
+                        <span class="promo-label">Xiaomi</span>
+                        <h3>Hiệu năng trên giá trị.</h3>
+                        <p>Nhiều lựa chọn cấu hình cao và camera mạnh trong cùng tầm giá.</p>
+                        <a href="#products" class="text-link" style="margin-top:20px">Xem Xiaomi <span>→</span></a>
+                        <img class="spotlight-phone" src="~/assets/phones/xiaomi-15.svg" alt="Xiaomi collection" />
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONSULT -->
+        <section class="section" id="consult">
+            <div class="container">
+                <div class="consult-card reveal">
+                    <div class="consult-content">
+                        <span class="eyebrow">Need help choosing?</span>
+                        <h2>Chưa biết nên mua máy nào?</h2>
+                        <p>Thay vì ép người dùng tự lọc hàng trăm model, khu tư vấn có thể dẫn họ theo ngân sách, nhu cầu camera, gaming, pin hoặc hệ điều hành.</p>
+                        <div class="consult-actions">
+                            <a href="#products" class="btn btn-dark">Bắt đầu chọn máy</a>
+                            <a href="#support" class="btn" style="border:1px solid rgba(0,0,0,.08);background:#f3f3f4;color:#111">Nhận tư vấn</a>
+                        </div>
+                    </div>
+
+                    <div class="consult-side">
+                        <div class="consult-glass">
+                            <strong>Chọn theo nhu cầu.</strong>
+                            <span>Ngân sách → thương hiệu → camera → pin → hiệu năng → đề xuất model phù hợp.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="section" id="support">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-copy">
+                        <span class="eyebrow">AURA care</span>
+                        <h2 class="section-title">Dịch vụ sau khi mua.</h2>
+                    </div>
+                </div>
+
+                <div class="services-grid reveal">
+                    <div class="service-item"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3L19 6V11C19 15.5 16.3 19 12 21C7.7 19 5 15.5 5 11V6L12 3Z"></path></svg></div><h3>Bảo hành chính hãng</h3><p>Thông tin rõ ràng theo từng sản phẩm và thương hiệu.</p></div>
+                    <div class="service-item"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 6H14V17H3V6Z"></path><path d="M14 10H18L21 13V17H14V10Z"></path></svg></div><h3>Giao hàng nhanh</h3><p>Đóng gói an toàn và theo dõi trạng thái đơn hàng.</p></div>
+                    <div class="service-item"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 12A8 8 0 0 1 18.5 6.5"></path><path d="M20 12A8 8 0 0 1 5.5 17.5"></path></svg></div><h3>Đổi trả thuận tiện</h3><p>Chính sách minh bạch và quy trình hỗ trợ rõ ràng.</p></div>
+                    <div class="service-item"><div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20 15.5C20 17.4 18.4 19 16.5 19H10L5 21V16.5C3.8 15.7 3 14.3 3 12.5V8.5C3 6.6 4.6 5 6.5 5H16.5C18.4 5 20 6.6 20 8.5V15.5Z"></path></svg></div><h3>Hỗ trợ 24/7</h3><p>Tư vấn sản phẩm, thanh toán và hỗ trợ sau bán.</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#home" class="brand" aria-label="AURA PHONE - Trang chủ">
+                        <span class="brand-mark">A</span>
+                        <span class="brand-word"><span class="brand-name">AURA</span><span class="brand-subtitle">PHONE STORE</span></span>
+                    </a>
+                    <p class="footer-copy">Cửa hàng smartphone đa thương hiệu với trải nghiệm mua sắm rõ ràng, hiện đại và tập trung vào sản phẩm.</p>
+                </div>
+
+                <div class="footer-column"><h4>Sản phẩm</h4><a href="#products">iPhone</a><a href="#products">Samsung</a><a href="#products">Xiaomi</a><a href="#products">Google Pixel</a></div>
+                <div class="footer-column"><h4>Mua hàng</h4><a href="#deals">Khuyến mãi</a><a href="#consult">Tư vấn chọn máy</a><a href="#">Trả góp</a><a href="#">Thu cũ đổi mới</a></div>
+                <div class="footer-column"><h4>Hỗ trợ</h4><a href="#support">Bảo hành</a><a href="#support">Đổi trả</a><a href="#support">Vận chuyển</a><a href="#">Liên hệ</a></div>
+                <div class="footer-column"><h4>Theo dõi</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 AURA PHONE. All rights reserved.</span>
+                <div class="footer-legal"><span>Privacy</span><span>Terms</span><span>Shipping</span><span>Payment</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const header = document.getElementById("header");
+            const menuButton = document.getElementById("menuButton");
+            const mobileMenu = document.getElementById("mobileMenu");
+            const searchButton = document.getElementById("searchButton");
+            const searchOverlay = document.getElementById("searchOverlay");
+            const closeSearch = document.getElementById("closeSearch");
+            const searchInput = document.getElementById("searchInput");
+            const desktopSearchInput = document.getElementById("desktopSearchInput");
+            const cartCount = document.getElementById("cartCount");
+            const mainProductGrid = document.getElementById("mainProductGrid");
+            const productResultText = document.getElementById("productResultText");
+
+            /* HEADER */
+            function updateHeader() {
+                if (!header) return;
+                header.classList.toggle("scrolled", window.scrollY > 20);
+            }
+
+            updateHeader();
+            window.addEventListener("scroll", updateHeader, { passive: true });
+
+            /* MOBILE MENU */
+            function setMobileMenu(open) {
+                if (!mobileMenu) return;
+                mobileMenu.classList.toggle("active", open);
+                mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
+                document.body.classList.toggle("menu-open", open);
+                if (menuButton) menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+            }
+
+            if (menuButton) {
+                menuButton.addEventListener("click", function () {
+                    setMobileMenu(!(mobileMenu && mobileMenu.classList.contains("active")));
+                });
+            }
+
+            if (mobileMenu) {
+                mobileMenu.addEventListener("click", function (event) {
+                    if (event.target.closest("a")) setMobileMenu(false);
+                });
+            }
+
+            /* SEARCH OVERLAY */
+            function setSearch(open) {
+                if (!searchOverlay) return;
+                searchOverlay.classList.toggle("active", open);
+                searchOverlay.setAttribute("aria-hidden", open ? "false" : "true");
+                document.body.classList.toggle("search-open", open);
+                if (searchButton) searchButton.setAttribute("aria-expanded", open ? "true" : "false");
+                if (open && searchInput) window.setTimeout(function () { searchInput.focus(); }, 120);
+            }
+
+            if (searchButton) searchButton.addEventListener("click", function () { setSearch(true); });
+            if (closeSearch) closeSearch.addEventListener("click", function () { setSearch(false); });
+            if (searchOverlay) {
+                searchOverlay.addEventListener("click", function (event) {
+                    if (event.target === searchOverlay) setSearch(false);
+                });
+            }
+
+            document.querySelectorAll(".search-suggestion").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    const value = button.getAttribute("data-search") || "";
+                    if (searchInput) {
+                        searchInput.value = value;
+                        searchInput.focus();
+                    }
+                });
+            });
+
+            /* PRODUCT FILTER + SEARCH */
+            let activeBrand = "all";
+            let activeQuery = "";
+
+            function normalize(value) {
+                return (value || "").toLowerCase().trim();
+            }
+
+            function applyProductFilter() {
+                if (!mainProductGrid) return;
+                const cards = Array.from(mainProductGrid.querySelectorAll(".product-card"));
+                let visibleCount = 0;
+
+                cards.forEach(function (card) {
+                    const brand = normalize(card.getAttribute("data-brand"));
+                    const name = normalize(card.getAttribute("data-name"));
+                    const brandMatch = activeBrand === "all" || brand === activeBrand;
+                    const queryMatch = !activeQuery || name.includes(activeQuery) || brand.includes(activeQuery);
+                    const show = brandMatch && queryMatch;
+                    card.classList.toggle("filtered-out", !show);
+                    if (show) visibleCount += 1;
+                });
+
+                if (productResultText) {
+                    productResultText.textContent = visibleCount + (visibleCount === 1 ? " sản phẩm" : " sản phẩm");
+                }
+            }
+
+            document.querySelectorAll(".filter-chip").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    document.querySelectorAll(".filter-chip").forEach(function (item) { item.classList.remove("active"); });
+                    button.classList.add("active");
+                    activeBrand = normalize(button.getAttribute("data-filter")) || "all";
+                    applyProductFilter();
+                });
+            });
+
+            document.querySelectorAll("[data-brand-jump]").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    const brand = normalize(link.getAttribute("data-brand-jump"));
+                    activeBrand = brand || "all";
+                    document.querySelectorAll(".filter-chip").forEach(function (item) {
+                        item.classList.toggle("active", normalize(item.getAttribute("data-filter")) === activeBrand);
+                    });
+                    window.setTimeout(applyProductFilter, 80);
+                });
+            });
+
+            document.querySelectorAll("[data-search-jump]").forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const value = link.getAttribute("data-search-jump") || "";
+                    runSearch(value);
+                });
+            });
+
+            function runSearch(value) {
+                activeQuery = normalize(value);
+                activeBrand = "all";
+                document.querySelectorAll(".filter-chip").forEach(function (item) {
+                    item.classList.toggle("active", item.getAttribute("data-filter") === "all");
+                });
+                applyProductFilter();
+                const target = document.getElementById("products");
+                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                setSearch(false);
+            }
+
+            if (desktopSearchInput) {
+                desktopSearchInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") runSearch(desktopSearchInput.value);
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") runSearch(searchInput.value);
+                });
+            }
+
+            /* CART */
+            let cart = 0;
+            document.querySelectorAll(".add-cart").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    cart += 1;
+                    if (cartCount) {
+                        cartCount.textContent = String(cart);
+                        cartCount.classList.remove("bump");
+                        void cartCount.offsetWidth;
+                        cartCount.classList.add("bump");
+                    }
+
+                    const icon = button.querySelector("svg");
+                    if (!icon) return;
+                    const previous = icon.innerHTML;
+                    icon.innerHTML = '<path d="M5 12.5L9.2 16.5L19 7"></path>';
+                    window.setTimeout(function () { icon.innerHTML = previous; }, 850);
+                });
+            });
+
+            /* FAVORITES */
+            document.querySelectorAll(".favorite-button").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    const active = button.classList.toggle("active");
+                    button.setAttribute("aria-pressed", active ? "true" : "false");
+                });
+            });
+
+            /* HERO SLIDER */
+            const slider = document.getElementById("heroSlider");
+            const slides = Array.from(document.querySelectorAll(".hero-slide"));
+            const dots = Array.from(document.querySelectorAll(".hero-dot"));
+            const prevButton = document.getElementById("heroPrev");
+            const nextButton = document.getElementById("heroNext");
+            let currentSlide = 0;
+            let sliderTimer = null;
+
+            function syncVideo(slide, active) {
+                const video = slide ? slide.querySelector("video") : null;
+                if (!video) return;
+                if (active) {
+                    const playPromise = video.play();
+                    if (playPromise && typeof playPromise.catch === "function") playPromise.catch(function () {});
+                } else {
+                    video.pause();
+                    try { video.currentTime = 0; } catch (error) { }
+                }
+            }
+
+            function showSlide(index) {
+                if (!slides.length) return;
+                currentSlide = (index + slides.length) % slides.length;
+
+                slides.forEach(function (slide, slideIndex) {
+                    const active = slideIndex === currentSlide;
+                    slide.classList.toggle("active", active);
+                    syncVideo(slide, active);
+                });
+
+                dots.forEach(function (dot, dotIndex) {
+                    dot.classList.toggle("active", dotIndex === currentSlide);
+                });
+            }
+
+            function stopSlider() {
+                if (sliderTimer) window.clearInterval(sliderTimer);
+                sliderTimer = null;
+            }
+
+            function startSlider() {
+                stopSlider();
+                sliderTimer = window.setInterval(function () {
+                    showSlide(currentSlide + 1);
+                }, 6500);
+            }
+
+            if (slides.length) {
+                showSlide(0);
+                startSlider();
+            }
+
+            if (prevButton) prevButton.addEventListener("click", function () { showSlide(currentSlide - 1); startSlider(); });
+            if (nextButton) nextButton.addEventListener("click", function () { showSlide(currentSlide + 1); startSlider(); });
+
+            dots.forEach(function (dot) {
+                dot.addEventListener("click", function () {
+                    showSlide(Number(dot.getAttribute("data-slide-to") || 0));
+                    startSlider();
+                });
+            });
+
+            if (slider) {
+                slider.addEventListener("mouseenter", stopSlider);
+                slider.addEventListener("mouseleave", startSlider);
+            }
+
+            /* DAILY COUNTDOWN */
+            const dealHour = document.getElementById("dealHour");
+            const dealMinute = document.getElementById("dealMinute");
+            const dealSecond = document.getElementById("dealSecond");
+
+            function pad(value) {
+                return String(value).padStart(2, "0");
+            }
+
+            function updateCountdown() {
+                const now = new Date();
+                const end = new Date(now);
+                end.setHours(23, 59, 59, 999);
+                const distance = Math.max(0, end.getTime() - now.getTime());
+                const hours = Math.floor(distance / 3600000);
+                const minutes = Math.floor((distance % 3600000) / 60000);
+                const seconds = Math.floor((distance % 60000) / 1000);
+                if (dealHour) dealHour.textContent = pad(hours);
+                if (dealMinute) dealMinute.textContent = pad(minutes);
+                if (dealSecond) dealSecond.textContent = pad(seconds);
+            }
+
+            updateCountdown();
+            window.setInterval(updateCountdown, 1000);
+
+            /* REVEAL */
+            const revealElements = document.querySelectorAll(".reveal");
+            if ("IntersectionObserver" in window) {
+                const revealObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add("visible");
+                        revealObserver.unobserve(entry.target);
+                    });
+                }, { threshold: .10, rootMargin: "0px 0px -35px 0px" });
+
+                revealElements.forEach(function (element) { revealObserver.observe(element); });
+            } else {
+                revealElements.forEach(function (element) { element.classList.add("visible"); });
+            }
+
+            /* ESC */
+            document.addEventListener("keydown", function (event) {
+                if (event.key !== "Escape") return;
+                setMobileMenu(false);
+                setSearch(false);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="bg4" x1="0" x2="1">
+      <stop offset="0%" stop-color="#ecfeff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="frame4" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg4)"/>
+  <g transform="translate(45 35)">
+    <rect x="35" y="0" width="240" height="520" rx="40" fill="url(#frame4)"/>
+    <rect x="48" y="18" width="214" height="484" rx="28" fill="#020617"/>
+    <rect x="70" y="52" width="170" height="388" rx="26" fill="#e0f2fe"/>
+    <circle cx="155" cy="454" r="12" fill="#cbd5e1"/>
+    <text x="155" y="250" text-anchor="middle" font-size="28" font-weight="700" fill="#0f172a" font-family="Arial, sans-serif">Pixel</text>
+    <text x="155" y="292" text-anchor="middle" font-size="17" fill="#475569" font-family="Arial, sans-serif">10 Pro</text>
+  </g>
+</svg>
